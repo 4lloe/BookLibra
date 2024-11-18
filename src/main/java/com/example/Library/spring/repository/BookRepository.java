@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -30,4 +31,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b.content FROM Book b WHERE b.id = :id")
     byte[] getContent(@Param("id") long id);
+
+    @Query("SELECT b.image FROM Book b WHERE b.name = :name")
+    Optional<byte[]> findImageByBookName(@Param("name") String name);
+
+    Optional<Book> findByName(String name);
 }

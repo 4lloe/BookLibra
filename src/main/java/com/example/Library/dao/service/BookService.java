@@ -4,12 +4,16 @@ import com.example.Library.dao.BookDao;
 import com.example.Library.entity.Book;
 import com.example.Library.spring.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,8 @@ import java.util.Optional;
 public class BookService implements BookDao {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public List<Book> getAll() {return bookRepository.findAll();}
@@ -74,4 +80,19 @@ public class BookService implements BookDao {
     public Page<Book> findByGenre(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection, long genreId) {
         return bookRepository.findByGenre(genreId, PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortField)));
     }
+
+    @Transactional
+    public Optional<Book> getBookByName(String name) {
+        return bookRepository.findByName(name);
+    }
+
+    /*public static String getBookContentAsText(Long id) {
+        byte[] content = bookRepository.getContent(id);
+        if (content != null) {
+
+            return new String(content, StandardCharsets.UTF_8);
+        } else {
+            return "Книга не найдена";
+        }
+    }*/
 }
