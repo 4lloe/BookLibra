@@ -1,9 +1,13 @@
 package com.example.Library.entity;
 
+import com.example.Library.spring.controller.ByteArrayConverter;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
+
+import java.sql.Types;
 
 @EqualsAndHashCode(of="id")
 @Table(catalog="Library")
@@ -25,7 +29,7 @@ public class Book {
 
     private String name;
 
-    @Lob
+    @JdbcTypeCode(Types.VARBINARY)
     @Column( nullable = false)
     private byte[] content;
 
@@ -49,18 +53,19 @@ public class Book {
     @Column(name = "publish_year")
     private Integer publishYear;
 
+    @Lob
     private byte[] image;
 
     private String description;
 
     @Column(name = "view_count")
-    private long viewCount;
+    private Long viewCount;
 
     @Column(name = "total_rating")
-    private long totalRating;
+    private Long totalRating;
 
     @Column(name="total_vote_count")
-    private long totalVoteCount;
+    private Long totalVoteCount;
 
     @Column(name="average_rating")
     private double averageRating;

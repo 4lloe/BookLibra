@@ -35,5 +35,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b.image FROM Book b WHERE b.name = :name")
     Optional<byte[]> findImageByBookName(@Param("name") String name);
 
+    @Query("SELECT new com.example.Library.entity.Book(b.id, b.name, b.pageCount, b.isbn, b.genre, b.author, b.publisher, b.publishYear, b.image, b.description, b.viewCount, b.totalRating, b.totalVoteCount, b.averageRating) FROM Book b")
+    List<Book> findAllWithoutLargeColumns();
+
     Optional<Book> findByName(String name);
 }

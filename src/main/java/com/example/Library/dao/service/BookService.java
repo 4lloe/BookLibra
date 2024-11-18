@@ -86,13 +86,4 @@ public class BookService implements BookDao {
         return bookRepository.findByName(name);
     }
 
-    /*public static String getBookContentAsText(Long id) {
-        byte[] content = bookRepository.getContent(id);
-        if (content != null) {
-
-            return new String(content, StandardCharsets.UTF_8);
-        } else {
-            return "Книга не найдена";
-        }
-    }*/
 }

@@ -19,7 +19,7 @@
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                             <title th:text="${el.name}">1</title>
                             <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <image th:src="'data:image/png;base64,' + ${'image_' + el.id}" width="200" height="200" />
+                            <!--<image th:src="'data:image/png;base64,' + ${'image_' + el.id}" width="200" height="200" />-->
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${el.name}" text-anchor="middle" dominant-baseline="middle"></text>
                         </svg>
 
@@ -28,7 +28,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/book/{name}(name=${el.name})}">View</a>
-                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/read/{name}(name=${el.name})}">Read</a>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/vote/{name}(name=${el.name})}">Read</a>
                                 </div>
                                 <small class="text-body-secondary" th:text="${el.averageRating}"></small>
                             </div>
