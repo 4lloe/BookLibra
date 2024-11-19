@@ -1,11 +1,9 @@
 package com.example.Library.entity;
 
-import com.example.Library.spring.controller.ByteArrayConverter;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
-import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import java.sql.Types;
 

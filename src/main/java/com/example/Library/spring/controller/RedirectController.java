@@ -68,4 +68,51 @@ public class RedirectController {
             return "errorPage";
         }
     }
+
+    /*@GetMapping("/read/{name}")
+    public String getContentAsTextByName(@PathVariable("name") String name, Model model) {
+        try {
+            byte[] content = bookRepository.getContentByName(name);
+
+            if (content != null) {
+                String decodedContent = new String(content, java.nio.charset.StandardCharsets.UTF_8);
+
+                model.addAttribute("content", decodedContent);
+                return "read-book";
+            } else {
+                model.addAttribute("errorMessage", "Content not found for the book");
+                return "errorPage";
+            }
+        } catch (Exception e) {
+            log.severe("Error retrieving content: " + e.getMessage());
+            model.addAttribute("errorMessage", "An error occurred while retrieving the content");
+            return "errorPage";
+        }
+    }*/
+    @GetMapping("/read/{name}")
+    public String getContentAsTextByName(@PathVariable("name") String name, Model model) {
+        try {
+            Optional<byte[]> optionalContent = bookRepository.getContentByName(name);
+
+            if (optionalContent.isPresent()) {
+                byte[] content = optionalContent.get();
+                String decodedContent = new String(content, java.nio.charset.StandardCharsets.UTF_8);
+                model.addAttribute("content", decodedContent);
+            } else {
+                model.addAttribute("content", "Content not found for this book.");
+                model.addAttribute("name", name);
+            }
+
+            return "read-book"; // Название шаблона страницы
+        } catch (Exception e) {
+            log.severe("Error retrieving content: " + e.getMessage());
+            model.addAttribute("errorMessage", "An error occurred while retrieving the content.");
+            return "errorPage";
+        }
+    }
+
+
+
 }
+
+

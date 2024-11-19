@@ -28,7 +28,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/book/{name}(name=${el.name})}">View</a>
-                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/vote/{name}(name=${el.name})}">Read</a>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="@{/read/{name}(name=${el.name})}">Read</a>
                                 </div>
                                 <small class="text-body-secondary" th:text="${el.averageRating}"></small>
                             </div>
