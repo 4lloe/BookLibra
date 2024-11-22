@@ -29,6 +29,7 @@ public class RedirectController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
     private BookService bookService;
 
     @GetMapping("/")
@@ -76,21 +77,6 @@ public class RedirectController {
         }
     }
 
-    @PostMapping("/book/create")
-    public  ResponseEntity<Book> addBook(@RequestParam("name") String name,
-                                        @RequestParam("pdfFile") MultipartFile pdfFile,
-                                        @RequestParam("pageCount") Integer pageCount,
-                                        @RequestParam("isbn") String isbn,
-                                        @RequestParam("image") MultipartFile imageFile,
-                                        @RequestParam("description") String description) {
-        try {
-            byte[] imageBytes = imageFile.getBytes();
-            Book savedBook = bookService.addBook(name, pdfFile, pageCount, isbn, imageBytes, description);
-            return ResponseEntity.ok(savedBook);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }
 
 

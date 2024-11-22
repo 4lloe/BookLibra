@@ -88,18 +88,5 @@ public class BookService implements BookDao {
         return bookRepository.findByName(name);
     }
 
-    public  Book addBook(String name, MultipartFile pdfFile, Integer pageCount, String isbn,
-                               byte[] image, String description) throws IOException {
-        Book book = new Book();
-        book.setName(name);
-        book.setContent(pdfFile.getBytes());  // Сохраняем PDF содержимое
-        book.setPageCount(pageCount);
-        book.setIsbn(isbn);
-        book.setImage(image);
-        book.setDescription(description);
-
-        // Сохраняем книгу в базе данных
-        return bookRepository.save(book);
-    }
 
 }

@@ -10,37 +10,7 @@
 
 <header th:insert="blocks/header :: header"></header>
 <main>
-    <form id="addBookForm" enctype="multipart/form-data">
-        <input type="text" id="name" name="name" placeholder="Название книги" required />
-        <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required />
-        <input type="number" id="pageCount" name="pageCount" placeholder="Количество страниц" required />
-        <input type="text" id="isbn" name="isbn" placeholder="ISBN" required />
-        <input type="file" id="image" name="image" accept="image/*" required />
-        <textarea id="description" name="description" placeholder="Описание"></textarea>
-        <button type="submit">Сохранить книгу</button>
-    </form>
 
-    <script>
-        document.getElementById('addBookForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const formData = new FormData(this);
-
-            fetch('/books/add', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Book saved:', data);
-                    alert('Книга успешно добавлена!');
-                })
-                .catch(error => {
-                    console.error('Error saving book:', error);
-                    alert('Ошибка при добавлении книги');
-                });
-        });
-    </script>
 
 
 </main>
