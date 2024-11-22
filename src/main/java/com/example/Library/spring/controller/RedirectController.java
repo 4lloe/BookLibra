@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,7 @@ public class RedirectController {
             return "errorPage";
         }
     }
+
 
     @GetMapping("/book/{name}")
     public String getBookByName(@PathVariable("name") String name, Model model) {
