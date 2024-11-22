@@ -42,6 +42,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b.content FROM Book b WHERE b.name = :name")
     Optional<byte[]> getContentByName(@Param("name") String name);
-    /*@Query("SELECT b.content FROM Book b WHERE b.name = :name")
-    byte[] getContentByName(@Param("name") String name);*/
+
+
 }

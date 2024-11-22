@@ -11,7 +11,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
@@ -84,6 +86,20 @@ public class BookService implements BookDao {
     @Transactional
     public Optional<Book> getBookByName(String name) {
         return bookRepository.findByName(name);
+    }
+
+    public  Book addBook(String name, MultipartFile pdfFile, Integer pageCount, String isbn,
+                               byte[] image, String description) throws IOException {
+        Book book = new Book();
+        book.setName(name);
+        book.setContent(pdfFile.getBytes());  // Сохраняем PDF содержимое
+        book.setPageCount(pageCount);
+        book.setIsbn(isbn);
+        book.setImage(image);
+        book.setDescription(description);
+
+        // Сохраняем книгу в базе данных
+        return bookRepository.save(book);
     }
 
 }

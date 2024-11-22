@@ -6,12 +6,17 @@ import com.google.common.net.HttpHeaders;
 import lombok.extern.java.Log;
 import com.example.Library.spring.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +28,8 @@ import java.util.Optional;
 public class RedirectController {
     @Autowired
     private BookRepository bookRepository;
+
+    private BookService bookService;
 
     @GetMapping("/")
     public String home(Model model){
@@ -69,50 +76,21 @@ public class RedirectController {
         }
     }
 
-    /*@GetMapping("/read/{name}")
-    public String getContentAsTextByName(@PathVariable("name") String name, Model model) {
+    @PostMapping("/book/create")
+    public  ResponseEntity<Book> addBook(@RequestParam("name") String name,
+                                        @RequestParam("pdfFile") MultipartFile pdfFile,
+                                        @RequestParam("pageCount") Integer pageCount,
+                                        @RequestParam("isbn") String isbn,
+                                        @RequestParam("image") MultipartFile imageFile,
+                                        @RequestParam("description") String description) {
         try {
-            byte[] content = bookRepository.getContentByName(name);
-
-            if (content != null) {
-                String decodedContent = new String(content, java.nio.charset.StandardCharsets.UTF_8);
-
-                model.addAttribute("content", decodedContent);
-                return "read-book";
-            } else {
-                model.addAttribute("errorMessage", "Content not found for the book");
-                return "errorPage";
-            }
-        } catch (Exception e) {
-            log.severe("Error retrieving content: " + e.getMessage());
-            model.addAttribute("errorMessage", "An error occurred while retrieving the content");
-            return "errorPage";
-        }
-    }*/
-    @GetMapping("/read/{name}")
-    public String getContentAsTextByName(@PathVariable("name") String name, Model model) {
-        try {
-            Optional<byte[]> optionalContent = bookRepository.getContentByName(name);
-
-            if (optionalContent.isPresent()) {
-                byte[] content = optionalContent.get();
-                String decodedContent = new String(content, java.nio.charset.StandardCharsets.UTF_8);
-                model.addAttribute("content", decodedContent);
-            } else {
-                model.addAttribute("content", "Content not found for this book.");
-                model.addAttribute("name", name);
-            }
-
-            return "read-book"; // Название шаблона страницы
-        } catch (Exception e) {
-            log.severe("Error retrieving content: " + e.getMessage());
-            model.addAttribute("errorMessage", "An error occurred while retrieving the content.");
-            return "errorPage";
+            byte[] imageBytes = imageFile.getBytes();
+            Book savedBook = bookService.addBook(name, pdfFile, pageCount, isbn, imageBytes, description);
+            return ResponseEntity.ok(savedBook);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
-
 }
 
 
