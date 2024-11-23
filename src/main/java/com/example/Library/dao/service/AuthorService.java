@@ -42,10 +42,8 @@ public class AuthorService implements AuthorDao {
             return Page.empty();
         }
 
-        // Создаем объект PageRequest с указанными параметрами
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sortDirection, sortField));
 
-        // Вызываем метод репозитория, который теперь принимает Pageable
         return authorRepository.findByFioContainingIgnoreCase(searchString[0], pageRequest);
     }
 

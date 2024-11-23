@@ -1,9 +1,12 @@
 package com.example.Library.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
+
+import java.sql.Types;
 
 @EqualsAndHashCode(of="id")
 @Table(catalog="Library")
@@ -14,10 +17,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    public Book(Long id, byte[] image) {
-        this.id = id;
-        this.image = image;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,7 @@ public class Book {
 
     private String name;
 
-    @Lob
+    @JdbcTypeCode(Types.VARBINARY)
     @Column( nullable = false)
     private byte[] content;
 
@@ -39,8 +38,8 @@ public class Book {
     private Genre genre;
 
     @ManyToOne
-    @JoinColumn
-    private Author author;
+    @JoinColumn(name = "author_id")
+    private Author authorFio;
 
     @ManyToOne
     @JoinColumn
@@ -49,34 +48,32 @@ public class Book {
     @Column(name = "publish_year")
     private Integer publishYear;
 
-    private byte[] image;
-
     private String description;
 
     @Column(name = "view_count")
-    private long viewCount;
+    private Long viewCount;
 
     @Column(name = "total_rating")
-    private long totalRating;
+    private Long totalRating;
 
     @Column(name="total_vote_count")
-    private long totalVoteCount;
+    private Long totalVoteCount;
 
     @Column(name="average_rating")
     private double averageRating;
 
-    public Book(Long id, String name, Integer pageCount, String isbn, Genre genre, Author author, Publisher publisher,
-                Integer publishYear, byte[] image, String description, long viewCount, long totalRating,
+
+    public Book(Long id, String name, Integer pageCount, String isbn, Genre genre, Author authorFio, Publisher publisher,
+                Integer publishYear, String description, long viewCount, long totalRating,
                 long totalVoteCount, double averageRating) {
         this.id = id;
         this.name = name;
         this.pageCount = pageCount;
         this.isbn = isbn;
         this.genre = genre;
-        this.author = author;
+        this.authorFio = authorFio;
         this.publisher = publisher;
         this.publishYear = publishYear;
-        this.image = image;
         this.description = description;
         this.viewCount = viewCount;
         this.totalRating = totalRating;
@@ -87,5 +84,7 @@ public class Book {
 
     @Override
     public String toString() {return name;}
+
+
 }
 

@@ -10,6 +10,7 @@ import org.hibernate.annotations.SelectBeforeUpdate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="author",catalog = "Library")
@@ -26,8 +27,8 @@ public class Author {
 
     private Date birthday;
 
-    @Basic(fetch = FetchType.LAZY)
-    @OneToMany(mappedBy = "author")
+    //@Basic(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "authorFio")
     private List<Book> books;
 
     @Override

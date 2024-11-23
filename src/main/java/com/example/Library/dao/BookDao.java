@@ -14,5 +14,4 @@ public interface BookDao extends GeneralDao<Book>{
 
     Page<Book> findByGenre(int pageNumber, int pageSize,String sortField, Sort.Direction sortDirection,long genreId);
 
-
 }
