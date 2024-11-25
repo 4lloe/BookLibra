@@ -1,4 +1,7 @@
 package com.example.Library.dao;
 
-public interface UserDao {
+import com.example.Library.entity.Book;
+import com.example.Library.entity.User;
+
+public interface UserDao extends GeneralDao<User>{
 }

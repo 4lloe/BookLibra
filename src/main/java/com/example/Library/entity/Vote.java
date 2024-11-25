@@ -22,7 +22,7 @@ public class Vote {
     private String value;
 
     @Column(name="book_id")
-    private Date book_id;
+    private Long book_id;
 
     private String username;
 }
