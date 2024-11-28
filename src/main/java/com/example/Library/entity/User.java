@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user_details")
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @DynamicUpdate @DynamicInsert
@@ -41,6 +41,9 @@ public class User {
     @NotBlank
     private String password;
 
+    @Transient //значит что поле временное и не отлетит в базу
+    private String confirmPassword;
+
     @Column(nullable = false)
     private String role = "ROLE_USER";
 
@@ -50,6 +53,7 @@ public class User {
     @Basic(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "user")
     private List<Book> books;
+
 
     @PrePersist
     protected void onCreate() {
@@ -69,10 +73,15 @@ public class User {
         this.password = encryptedPassword;
     }
 
-    // Метод для шифрования пароля с помощью BCrypt
+    public User( String email, String encryptedPassword) {
+        this.email = email;
+        this.password = encryptedPassword;
+    }
+
+    /*// Метод для шифрования пароля с помощью BCrypt
     public static String encryptPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
-    }
+    }*/
 
 }

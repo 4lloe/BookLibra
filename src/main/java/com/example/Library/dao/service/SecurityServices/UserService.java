@@ -1,24 +1,15 @@
-package com.example.Library.dao.service;
+package com.example.Library.dao.service.SecurityServices;
 
 import com.example.Library.dao.UserDao;
-import com.example.Library.entity.Book;
 import com.example.Library.entity.User;
 import com.example.Library.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.Library.dao.UserDao;
-import com.example.Library.entity.User;
-import com.example.Library.spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +21,6 @@ public class UserService implements UserDao {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAll() {
@@ -76,7 +65,14 @@ public class UserService implements UserDao {
         return userRepository.findByEmailContainingIgnoreCase(searchString[0], PageRequest.of(pageNumber, pageSize, sort));
     }
 
-    public void registerUser(String email, String rawPassword) {
+    @Override
+    public User findByEmail(String Email) {
+        return userRepository.findByEmail(Email);
+    }
+
+
+
+    /*public void registerUser(String email, String rawPassword) {
         // Check if the user already exists
         if (userRepository.findUserByEmail(email).isPresent()) {
             throw new IllegalArgumentException("User with this email already exists");
@@ -91,6 +87,6 @@ public class UserService implements UserDao {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-    }
+    }*/
 }
 

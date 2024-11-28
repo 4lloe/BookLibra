@@ -32,6 +32,16 @@
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
+                                <!-- Обработка ошибки emailExists -->
+                                <div th:if="${param.error != null}" class="alert alert-danger" role="alert">
+                                    <strong th:text="'Email already exists!'"></strong> Please choose a different email.
+                                </div>
+
+                                <!-- Обработка сообщения об успешной регистрации -->
+                                <div th:if="${message != null}" class="alert alert-success" role="alert">
+                                    <strong th:text="${message}"></strong>
+                                </div>
+
                                 <form th:action="@{/register}" method="post" class="mx-1 mx-md-4" onsubmit="return validatePasswords()">
 
                                     <div class="d-flex flex-row align-items-center mb-4">
